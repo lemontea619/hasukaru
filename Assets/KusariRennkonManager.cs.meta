@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: cbe28cfe78a954bb399bf678c5f5e45b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - rennkonPrefab: {fileID: 6209601330344319027, guid: b8d90d695564a4aa795b39d718806cd6, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
