@@ -10,6 +10,11 @@ public class LotusManager : MonoBehaviour
     
     // ハスが生成される基準の位置
     public Vector3 baseSpawnPosition = new Vector3(0, 0, 0); 
+    
+    [Header("ランダム生成範囲")]
+public float randomRangeX = 3f; // X軸の±の範囲
+public float minYPosition = 0f; // 生成されるY軸の最小値
+public float maxYPosition = 5f;  // 生成されるY軸の最大値
 
     void Start()
     {
@@ -17,15 +22,19 @@ public class LotusManager : MonoBehaviour
         InvokeRepeating("SpawnNewLotus", spawnInterval, spawnInterval);
     }
 
-   void SpawnNewLotus()
+  void SpawnNewLotus()
 {
     Debug.Log("20秒経過。新しいハスが生成されました。");
 
-    // 生成位置をベース位置から少しランダムにずらす（ランダム範囲：-1f から 1f）
-    Vector3 randomOffset = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0);
-    Vector3 actualSpawnPosition = baseSpawnPosition + randomOffset;
+    // X軸はベース位置から±randomRangeXの範囲でランダムにずらす
+    float offsetX = Random.Range(-randomRangeX, randomRangeX);
+    
+    // Y軸はベース位置からのずれではなく、絶対的な minYPosition と maxYPosition の間でランダムに決定する
+    float offsetY = Random.Range(minYPosition, maxYPosition); 
 
-    // ハスを生成
+    // Y軸の生成に baseSpawnPosition.y を使わないように、ここでは Vector3 の値を直接代入
+    Vector3 actualSpawnPosition = new Vector3(baseSpawnPosition.x + offsetX, offsetY, baseSpawnPosition.z);
+
     Instantiate(lotusPrefab, actualSpawnPosition, Quaternion.identity);
 }
 }
