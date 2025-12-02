@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: b9a3fc5b026d14275b6bd63a70a86d10
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - lotusPrefab: {fileID: 531689435959418203, guid: e313e5a552ee04e5390a7f224e545d30, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
