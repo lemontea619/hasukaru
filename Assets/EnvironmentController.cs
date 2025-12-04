@@ -1,58 +1,57 @@
 using UnityEngine;
-using UnityEngine.UI; // Imageコンポーネントを使うために必要
+using UnityEngine.UI;
 
 public class EnvironmentController : MonoBehaviour
 {
-    // === インスペクターで設定する変数 ===
-    // 埋まっていく前景のImageをアタッチ
+    // ... (既存の変数)
     public Image fillImage; 
-    
-    [Header("環境値設定")]
-    // 1回のクリックで増える量 (5% = 0.05f)
     public float increaseAmount = 0.05f; 
-
-    // === 内部変数 ===
-    // 現在の環境値（0.0fから1.0fの間で管理）
     private float currentEnvironmentValue = 0.0f; 
+
+    // === 新しく追加する変数 ===
+    [Header("地面の切り替え設定")]
+    public SpriteRenderer groundSpriteRenderer; // 地面のスプライトレンダラー
+    public Sprite roughGroundSprite;           // 荒れた地面のSprite
+    public Sprite cleanGroundSprite;           // 綺麗な地面のSprite
+    public float cleanGroundThreshold = 0.9f;  // 綺麗になるしきい値 (90% = 0.9f)
+    private bool isGroundClean = false;        // 地面が綺麗になったかどうかのフラグ
+    // ===========================
 
     void Start()
     {
-        // ゲーム開始時の初期表示を0%に設定
         fillImage.fillAmount = currentEnvironmentValue;
-    }
-
-    void Update()
-    {
-        // マウスの左クリック（または画面タップ）を検出
-        if (Input.GetMouseButtonDown(0))
+        
+        // ゲーム開始時は荒れた地面にする
+        if (groundSpriteRenderer != null && roughGroundSprite != null)
         {
-            // 環境値を増加させる
-            AddEnvironmentValue();
+            groundSpriteRenderer.sprite = roughGroundSprite;
         }
     }
-
-    /// <summary>
-    /// 環境値を増加させ、メーターを更新する
-    /// </summary>
+    
     public void AddEnvironmentValue()
     {
-        // 現在値に増加量を足す
         currentEnvironmentValue += increaseAmount;
-
-        // 値を0.0fから1.0fの間に制限する (Mathf.Clamp)
-        // 1.0f は 100% を意味する
         currentEnvironmentValue = Mathf.Clamp(currentEnvironmentValue, 0.0f, 1.0f);
 
-        // UIのFill Amountを更新
         fillImage.fillAmount = currentEnvironmentValue;
-
-        // デバッグログで現在の値を表示
         Debug.Log("現在の環境値: " + (currentEnvironmentValue * 100).ToString("F0") + " %");
 
         if (currentEnvironmentValue >= 1.0f)
         {
             Debug.Log("環境値が最大 (100%) に達しました！");
-            // 例: ゲームクリア処理などをここに追加
         }
+
+        // === 新しく追加するロジック ===
+        // 環境値がしきい値を超えて、まだ地面が綺麗になっていない場合
+        if (currentEnvironmentValue >= cleanGroundThreshold && !isGroundClean)
+        {
+            if (groundSpriteRenderer != null && cleanGroundSprite != null)
+            {
+                groundSpriteRenderer.sprite = cleanGroundSprite; // 綺麗な地面に切り替える
+                isGroundClean = true;                             // フラグを立てて一度だけ切り替わるようにする
+                Debug.Log("地面が綺麗になりました！");
+            }
+        }
+        // ===========================
     }
 }
