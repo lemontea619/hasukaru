@@ -3,7 +3,9 @@ guid: 0a82f8c4704ab4a968b3ff55864aa9cf
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - deadHasuSprite: {instanceID: 0}
+  - deadRenkonPrefab: {fileID: 3494468162951801956, guid: 75cf68fa3a9b04e99a7072999631d11e, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
