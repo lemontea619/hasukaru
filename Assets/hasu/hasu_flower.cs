@@ -28,7 +28,7 @@ public class hasu_flower : MonoBehaviour
         if (spriteRenderer != null && deadHasuSprite != null)
             spriteRenderer.sprite = deadHasuSprite;
 
-        Debug.Log("ハスが枯れました(-5pt)。5秒後にレンコンになります。");
+        Debug.Log("ハスが枯れました(-2pt)。5秒後にレンコンになります。");
         
         // 5秒後にレンコンを生成する関数を呼び出す
         Invoke("SpawnDeadRenkon", 5f);

@@ -37,25 +37,54 @@ public class EnvironmentController : MonoBehaviour
         // （沼の色変化などのUpdateVisuals処理は前回同様）
     }
 
-    void CalculateTotalPoints()
+// ... 既存の変数の後に追加
+private List<SwanFish> allFishes = new List<SwanFish>();
+
+// 魚が生成された時に自分を登録する窓口
+public void RegisterFish(SwanFish fish)
+{
+    allFishes.Add(fish);
+}
+
+// --- 既存のリストに追加 ---
+private List<BlackBass> allBlackBasses = new List<BlackBass>(); // ブラックバス用リスト
+
+// ブラックバスが生成された時に登録する窓口
+public void RegisterBlackBass(BlackBass bass)
+{
+    allBlackBasses.Add(bass);
+}
+
+void CalculateTotalPoints()
+{
+    allLotuses.RemoveAll(l => l == null);
+    allDeadRenkon.RemoveAll(r => r == null);
+    allFishes.RemoveAll(f => f == null);
+    allBlackBasses.RemoveAll(b => b == null); // 削除されたバスを掃除
+
+    // 各要素のカウント
+    int livingLotusCount = 0;
+    foreach (var lotus in allLotuses)
     {
-        allLotuses.RemoveAll(l => l == null);
-        allDeadRenkon.RemoveAll(r => r == null);
-
-        int livingLotusCount = 0;
-        int witheredLotusCount = 0;
-        int deadRenkonCount = allDeadRenkon.Count;
-
-        foreach (var lotus in allLotuses)
-        {
-            if (lotus.isWithered) witheredLotusCount++;
-            else livingLotusCount++;
-        }
-
-        // ポイント計算ルール
-        // 生きているハス: +5pt
-        // 枯れたハス: -5pt
-        // 枯れたレンコン: -5pt
-        totalPoints = (livingLotusCount * 5) + (witheredLotusCount * -5) + (deadRenkonCount * -5);
+        if (!lotus.isWithered) livingLotusCount++;
     }
+    int witheredLotusCount = allLotuses.Count - livingLotusCount;
+    int deadRenkonCount = allDeadRenkon.Count;
+    int fishCount = allFishes.Count;
+    int blackBassCount = allBlackBasses.Count; // ブラックバスの数
+
+    // 【最新のポイント計算ルール】
+    // 生きているハス: +5pt
+    // 枯れたハス: -5pt
+    // 枯れたレンコン: -5pt
+    // 魚(SwanFish): +5pt
+    // ブラックバス: -2pt (★追加★)
+    
+    totalPoints = (livingLotusCount * 5) 
+                + (witheredLotusCount * -5) 
+                + (deadRenkonCount * -5) 
+                + (fishCount * 5) 
+                + (blackBassCount * -2); // ブラックバスはマイナス
+}
+
 }

@@ -3601,6 +3601,10 @@ PrefabInstance:
       value: hasu
       objectReference: {fileID: 0}
     - target: {fileID: 1008755568904768327, guid: e313e5a552ee04e5390a7f224e545d30, type: 3}
+      propertyPath: wiltingTime
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1008755568904768327, guid: e313e5a552ee04e5390a7f224e545d30, type: 3}
       propertyPath: deadRenkonPrefab
       value: 
       objectReference: {fileID: 3494468162951801956, guid: 75cf68fa3a9b04e99a7072999631d11e, type: 3}
