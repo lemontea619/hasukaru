@@ -3,7 +3,12 @@ guid: 49fd6e355737f4ec6b8a604c1d4ff843
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - fillImage: {instanceID: 0}
+  - groundSpriteRenderer: {instanceID: 0}
+  - roughGroundSprite: {fileID: 21300000, guid: 770b21569489f4f349ddebefad1f5a50, type: 3}
+  - cleanGroundSprite: {fileID: 21300000, guid: 94b5b0b5b75c54e92a78a2b2fb26bcd3, type: 3}
+  - swampRenderer: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

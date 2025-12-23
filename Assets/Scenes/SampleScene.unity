@@ -2415,8 +2415,13 @@ MonoBehaviour:
   maxPointsFor100Percent: 100
   totalPoints: 0
   groundSpriteRenderer: {fileID: 380552547}
+  roughGroundSprite: {fileID: 21300000, guid: 770b21569489f4f349ddebefad1f5a50, type: 3}
   cleanGroundSprite: {fileID: 21300000, guid: 94b5b0b5b75c54e92a78a2b2fb26bcd3, type: 3}
+  cleanGroundThreshold: 0.9
   swampRenderer: {fileID: 2279028}
+  roughSwampColor: {r: 0.48, g: 0.58, b: 0.47, a: 0.5}
+  cleanSwampColor: {r: 0.62, g: 0.86, b: 0.96, a: 0.5}
+  colorTransitionThreshold: 0.9
 --- !u!4 &1479916819
 Transform:
   m_ObjectHideFlags: 0
