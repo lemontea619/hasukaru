@@ -2377,9 +2377,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SwanFishPrefab: {fileID: 195101266213622128, guid: 0b869d3c162b447ffaeafecc18d7105f, type: 3}
-  spawnInterval: 15
+  spawnInterval: 7
   minY: -1
   maxY: 2
+  predationCheckInterval: 5
 --- !u!1 &1479916817
 GameObject:
   m_ObjectHideFlags: 0
@@ -2468,7 +2469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishPrefab: {fileID: 866602494591547594, guid: 5f5705700591040489bbe4a0cd82b3b4, type: 3}
-  spawnInterval: 15
+  spawnInterval: 10
   minY: -1
   maxY: 2
 --- !u!1 &1540447780

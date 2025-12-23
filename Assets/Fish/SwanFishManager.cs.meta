@@ -3,7 +3,8 @@ guid: ef8c7dd872cbf48b4918aea6c41f2a90
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - SwanFishPrefab: {fileID: 195101266213622128, guid: 0b869d3c162b447ffaeafecc18d7105f, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

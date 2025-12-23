@@ -11,10 +11,20 @@ public class LotusManager : MonoBehaviour
     public float minYPosition = 0f;
     public float maxYPosition = 5f;
 
+    [Header("藻の抑制設定")]
+    public float checkInterval = 5f; // 5秒ごとにチェック
+
+    private EnvironmentController ec;
+
     void Start()
     {
+        ec = FindObjectOfType<EnvironmentController>();
+
         // 20秒間隔で生成
         InvokeRepeating("SpawnNewLotus", spawnInterval, spawnInterval);
+
+        // ★追加：定期的にハスの数をチェックして藻を減らす処理を開始
+        InvokeRepeating("CheckAlgaeReduction", checkInterval, checkInterval);
     }
 
     void SpawnNewLotus()
@@ -26,9 +36,23 @@ public class LotusManager : MonoBehaviour
         Instantiate(lotusPrefab, spawnPos, Quaternion.identity);
     }
 
-    // ドラッグ＆ドロップスクリプトから呼び出す用
     public void GenerateLotusAt(Vector3 position)
     {
         Instantiate(lotusPrefab, position, Quaternion.identity);
+    }
+
+    // ★追加：ハスが6個以上なら藻を1つ消す
+    void CheckAlgaeReduction()
+    {
+        if (ec == null) return;
+
+        // EnvironmentControllerから「生きているハス」の数を聞く
+        int livingLotusCount = ec.GetLivingLotusCount();
+
+        // ハスが6個以上なら、藻を削除する命令を出す
+        if (livingLotusCount >= 6)
+        {
+            ec.RemoveOneMo();
+        }
     }
 }

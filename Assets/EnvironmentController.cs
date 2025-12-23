@@ -37,6 +37,43 @@ public class EnvironmentController : MonoBehaviour
     public void RegisterFish(SwanFish fish) => allFishes.Add(fish);
     public void RegisterBlackBass(BlackBass bass) => allBlackBasses.Add(bass);
     public void RegisterMo(mo moScript) => allMo.Add(moScript);
+    
+    // EnvironmentController.cs のクラス内（RegisterMo関数の下あたり）に追加してください
+public int GetBlackBassCount()
+{
+    allBlackBasses.RemoveAll(b => b == null); // 念のためリストを整理
+    return allBlackBasses.Count;
+}
+
+// EnvironmentController.cs のクラス内に追加
+
+// 1. 生きているハスの数を計算して返す関数
+public int GetLivingLotusCount()
+{
+    int count = 0;
+    allLotuses.RemoveAll(l => l == null); // リストを掃除
+    foreach (var lotus in allLotuses)
+    {
+        if (lotus != null && !lotus.isWithered) count++;
+    }
+    return count;
+}
+
+public void RemoveOneMo()
+{
+    allMo.RemoveAll(m => m == null);
+    
+    // アイテム（原本）ではなく、クローンされた藻だけを探す
+    mo target = allMo.Find(m => m.gameObject.name.Contains("(Clone)") || m.CompareTag("PlantedMo"));
+
+    if (target != null)
+    {
+        allMo.Remove(target);
+        Destroy(target.gameObject);
+        Debug.Log("ブラックバスの影響で藻が1つ消失しました。");
+    }
+}
+
 
     void Start()
     {
