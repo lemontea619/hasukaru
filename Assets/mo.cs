@@ -4,21 +4,26 @@ public class mo : MonoBehaviour
 {
     void Start()
     {
-        // 生まれた瞬間に EnvironmentController を探す
-        EnvironmentController ec = FindObjectOfType<EnvironmentController>();
-        
-        if (ec != null)
+        // ★修正ポイント：名前に "(Clone)" が含まれている場合のみ登録する
+        // これにより、アイテムBOXにあるオリジナルは無視されます
+        if (gameObject.name.Contains("(Clone)"))
         {
-            // Controller側に自分（mo）を登録する
-            ec.RegisterMo(this);
-            Debug.Log("moが登録されました。点数が更新されます。");
+            EnvironmentController ec = FindObjectOfType<EnvironmentController>();
+            
+            if (ec != null)
+            {
+                ec.RegisterMo(this);
+                Debug.Log("クローンのmoが登録されました。");
+            }
+        }
+        else
+        {
+            Debug.Log("これはアイテムBOXのオリジナルなので登録しません。");
         }
     }
 
-    // もし後で藻を削除する機能（鎌で刈るなど）を作った場合、
-    // 消えた瞬間に自動でポイントが減るようになります。
     void OnDestroy()
     {
-        // 削除時はEnvironmentControllerのリスト掃除機能で自動的にポイント再計算されます
+        // 削除時は自動的にリストから外れる仕組み（EnvironmentController側）
     }
 }
