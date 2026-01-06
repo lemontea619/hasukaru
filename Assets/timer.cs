@@ -6,8 +6,8 @@ public class Timer : MonoBehaviour
     // === インスペクターで設定する変数 ===
     public TMP_Text timerText; // 時間を表示するTextMeshProテキスト
 
-    // タイマーの合計時間（3分 = 180秒）
-    public float totalTime = 180f;
+    // タイマーの合計時間
+    public float totalTime = 60f;
 
     // === 内部変数 ===
     private float currentTime;
@@ -37,7 +37,7 @@ public class Timer : MonoBehaviour
             {
                 currentTime = 0f;
                 isRunning = false;
-                Debug.Log("Time's Up! 3分経過しました。");
+                Debug.Log("Time's Up! 1分経過しました。");
                 // 終了時の処理をここに追加
             }
 

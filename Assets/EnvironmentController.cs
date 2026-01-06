@@ -130,23 +130,42 @@ public class EnvironmentController : MonoBehaviour
     {
         if (swanPrefab == null || spawnPoint == null || swanAnchors == null || swanAnchors.Length < 2) return;
 
-        // 0.8以上で2羽、0.1以上で1羽
-        int targetCount = (currentSwanValue >= 0.8f) ? 2 : (currentSwanValue >= 0.1f ? 1 : 0);
+        // --- ★出現ルールの書き換え ---
+        int targetCount = 0;
+
+        if (currentSwanValue >= 0.8f) 
+        {
+            targetCount = 2;      // 80%以上で合計2羽
+        }
+        else if (currentSwanValue > 0.0f) 
+        {
+            targetCount = 1;      // 0%より大きければ、最初からいる1羽のみ
+        }
+        else 
+        {
+            targetCount = 0;      // 0%以下（完全な汚濁など）で0羽
+        }
+        // ----------------------------
 
         for (int i = 0; i < 2; i++)
         {
             if (i < targetCount && activeSwans[i] == null)
             {
+                // 白鳥を生成
                 GameObject newSwan = Instantiate(swanPrefab, spawnPoint.position, Quaternion.identity);
                 
-                // ★ここでサイズを調整
+                // ★サイズを2分の1（0.5f）にする（インスペクターのSwan Scaleが0.5なら反映されます）
                 newSwan.transform.localScale = new Vector3(swanScale, swanScale, 1f);
 
                 activeSwans[i] = newSwan.GetComponent<BirdMovement>();
-                if (activeSwans[i] != null) activeSwans[i].targetPosition = swanAnchors[i].position;
+                if (activeSwans[i] != null) 
+                {
+                    activeSwans[i].targetPosition = swanAnchors[i].position;
+                }
             }
             else if (i >= targetCount && activeSwans[i] != null)
             {
+                // 数が減る条件（80%未満になった、または0%になった）の時に飛び去る
                 activeSwans[i].FlyAway(spawnPoint.position);
                 activeSwans[i] = null;
             }

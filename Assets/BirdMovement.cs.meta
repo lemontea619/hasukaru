@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 8ab6f8f3d62ec4ef4a374bab4140f509
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - flyingSprite1: {fileID: 21300000, guid: 1f3c5da18985342ada898e5bd3b354dd, type: 3}
+  - flyingSprite2: {fileID: 21300000, guid: d670e0d96b1914d71a38a7e641711f3a, type: 3}
+  - sittingSprite: {fileID: 21300000, guid: 30e0d3e707e954c25a275d72a77690f9, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
