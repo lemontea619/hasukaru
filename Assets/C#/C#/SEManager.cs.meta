@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: e642e1b93a06d4822887606e0efc0f21
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - audioSource: {instanceID: 0}
+  - clickSE: {fileID: 8300000, guid: 8c09271b340334bb19ba4eece4afd39a, type: 3}
+  - backSE: {fileID: 8300000, guid: e528d3447685f4ed583d79d916a7c744, type: 3}
+  - lotusSpawnSE: {fileID: 8300000, guid: 89bf5a324c2d141f181334e9eea62558, type: 3}
+  - hakutyo: {fileID: 8300000, guid: 809453d4052a54d29a021722b0d75d0a, type: 3}
+  - item: {fileID: 8300000, guid: d9e1647443ac74c08bb06a1f6756d455, type: 3}
+  - tong: {fileID: 8300000, guid: 202d861306acc45afb49217bb0cbb527, type: 3}
+  - hasukaru: {fileID: 8300000, guid: 32e8076e8ac8146bb9652f872215ef9a, type: 3}
+  - basuturu: {fileID: 8300000, guid: 8305c186793a84aa1bcf841baaa3daee, type: 3}
+  - fish: {fileID: 8300000, guid: 9b09bb20d12fc4dc4a41c56af3a39871, type: 3}
+  - mo: {fileID: 8300000, guid: 889f9a9622dbc411fb169daa7635a955, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
