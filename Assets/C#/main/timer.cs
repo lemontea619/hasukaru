@@ -1,21 +1,48 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement; // ★追加：シーン切り替えに必要
+using UnityEngine.SceneManagement;
+using System.Collections; // コルーチンに必要
 
 public class Timer : MonoBehaviour
 {
+    [Header("参照設定")]
     public TMP_Text timerText;
-    public EnvironmentController envController; // meterをドラッグ
+    public EnvironmentController envController;
+    public DuckWalker duckWalker;
+
+    [Header("カモの画像設定")]
+    public Sprite duck1min_A;
+    public Sprite duck1min_B;
+    public Sprite duck3min_A;
+    public Sprite duck3min_B;
+    public Sprite duckFinishSprite; // 終了用の新しいカモ画像
+
+    [Header("タイマー設定")]
     public float totalTime = 60f;
-    public string resultSceneName = "ResultScene"; // ★結果シーンの正確な名前
+    public string resultSceneName = "ResultScene";
 
     private float currentTime;
+    private float duckAppearanceTime;
     private bool isRunning = false;
+    private bool duckCalled = false;
+    private bool isEnding = false;
 
     void Start()
     {
         currentTime = totalTime;
         isRunning = true;
+
+        // 合計時間によって出現タイミングと画像を切り替え
+        if (totalTime >= 180f) 
+        {
+            duckAppearanceTime = 60f;
+            if (duckWalker != null) duckWalker.SetSprites(duck3min_A, duck3min_B);
+        }
+        else 
+        {
+            duckAppearanceTime = 30f;
+            if (duckWalker != null) duckWalker.SetSprites(duck1min_A, duck1min_B);
+        }
     }
 
     void Update()
@@ -23,22 +50,39 @@ public class Timer : MonoBehaviour
         if (isRunning)
         {
             currentTime -= Time.deltaTime;
-            if (currentTime <= 0f)
+
+            // 30秒/1分でのカモ出現チェック
+            if (!duckCalled && currentTime <= duckAppearanceTime)
+            {
+                duckCalled = true;
+                duckWalker?.StartWalking();
+            }
+
+            // タイムアップ判定
+            if (currentTime <= 0f && !isEnding)
             {
                 currentTime = 0f;
-                isRunning = false;
-                FinishGame();
+                isEnding = true;
+                StartCoroutine(FinishSequence());
             }
             UpdateTimerDisplay();
         }
     }
 
-    void FinishGame()
+    // ★終了演出シーケンス
+    IEnumerator FinishSequence()
     {
-        // 1. スコアをstatic変数に保存
-        if (envController != null) envController.PrepareScores();
+        // 1. カモに終了用画像を渡して、下から出す
+        if (duckWalker != null)
+        {
+            duckWalker.AppearAtEnd(duckFinishSprite);
+        }
 
-        // 2. 結果シーンへジャンプ！
+        // 2. ★ここを 1.0f から 2.0f に変更しました
+        yield return new WaitForSeconds(2.0f);
+
+        // 3. スコアを保存してシーン遷移
+        if (envController != null) envController.PrepareScores();
         SceneManager.LoadScene(resultSceneName);
     }
 
