@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
-using System.Collections; // コルーチンに必要
+using System.Collections;
 
 public class Timer : MonoBehaviour
 {
@@ -15,7 +15,7 @@ public class Timer : MonoBehaviour
     public Sprite duck1min_B;
     public Sprite duck3min_A;
     public Sprite duck3min_B;
-    public Sprite duckFinishSprite; // 終了用の新しいカモ画像
+    public Sprite duckFinishSprite; 
 
     [Header("タイマー設定")]
     public float totalTime = 60f;
@@ -32,7 +32,7 @@ public class Timer : MonoBehaviour
         currentTime = totalTime;
         isRunning = true;
 
-        // 合計時間によって出現タイミングと画像を切り替え
+        // タイマー設定に応じてカモの出現時間と画像を変更
         if (totalTime >= 180f) 
         {
             duckAppearanceTime = 60f;
@@ -51,14 +51,12 @@ public class Timer : MonoBehaviour
         {
             currentTime -= Time.deltaTime;
 
-            // 30秒/1分でのカモ出現チェック
             if (!duckCalled && currentTime <= duckAppearanceTime)
             {
                 duckCalled = true;
                 duckWalker?.StartWalking();
             }
 
-            // タイムアップ判定
             if (currentTime <= 0f && !isEnding)
             {
                 currentTime = 0f;
@@ -69,21 +67,38 @@ public class Timer : MonoBehaviour
         }
     }
 
-    // ★終了演出シーケンス
+    // ★終了演出：Zennの記事のスクリプトを呼び出す
     IEnumerator FinishSequence()
     {
-        // 1. カモに終了用画像を渡して、下から出す
+        isRunning = false;
+
+        // 1. カモの終了画像を表示
         if (duckWalker != null)
         {
             duckWalker.AppearAtEnd(duckFinishSprite);
         }
 
-        // 2. ★ここを 1.0f から 2.0f に変更しました
+        // 2秒間、カモの姿を見せる
         yield return new WaitForSeconds(2.0f);
 
-        // 3. スコアを保存してシーン遷移
-        if (envController != null) envController.PrepareScores();
-        SceneManager.LoadScene(resultSceneName);
+        // 2. フェードスクリプト（FadeSceneLoader）を探して実行
+        FadeSceneLoader loader = FindObjectOfType<FadeSceneLoader>();
+        
+        if (loader != null)
+        {
+            // スコアを保存する準備
+            if (envController != null) envController.PrepareScores();
+            
+            // Zennの記事の方式でフェードとシーン遷移を開始
+            loader.CallCoroutine(); 
+        }
+        else
+        {
+            // 万が一スクリプトが見つからない場合は直接遷移
+            Debug.LogWarning("FadeSceneLoaderが見つかりません。直接遷移します。");
+            if (envController != null) envController.PrepareScores();
+            SceneManager.LoadScene(resultSceneName);
+        }
     }
 
     void UpdateTimerDisplay()

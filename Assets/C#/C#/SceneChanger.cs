@@ -19,8 +19,7 @@ public class SceneChanger : MonoBehaviour
         // クリック音を鳴らす
         FindObjectOfType<SEManager>().PlayClick();
 
-        // 少し待ってからシーン移動
-        Invoke(nameof(LoadScene), 0.15f);
+
     }
 
      public void ChangeSceneWithBackSE(string sceneName)
